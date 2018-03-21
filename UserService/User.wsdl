@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:mh="http://www.example.org/User/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="User"
+	targetNamespace="http://www.example.org/User/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.example.org/User/">
+			<xsd:element name="UserFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="UserFault" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="AddUserRequest">
+		<wsdl:part name="username" type="xsd:string" />
+		<wsdl:part name="password" type="xsd:string" />
+		<wsdl:part name="address" type="xsd:string" />
+		<wsdl:part name="email" type="xsd:string" />
+	</wsdl:message>
+	<wsdl:message name="AddUserResponse">
+	</wsdl:message>
+	<wsdl:message name="GetUserInfoRequest">
+		<wsdl:part name="username" type="xsd:string" />
+	</wsdl:message>
+	<wsdl:message name="GetUserInfoResponse">
+		<wsdl:part name="address" type="xsd:string" />
+		<wsdl:part name="email" type="xsd:string" />
+	</wsdl:message>
+	<wsdl:message name="UserFault">
+		<wsdl:part name="errorMessage" element="mh:UserFault" />
+	</wsdl:message>
+	<wsdl:portType name="User">
+		<wsdl:operation name="addUser">
+			<wsdl:input message="mh:AddUserRequest" />
+			<wsdl:output message="mh:AddUserResponse" />
+			<wsdl:fault name="AddUserFault" message="mh:UserFault" />
+		</wsdl:operation>
+		<wsdl:operation name="getUserInfo">
+			<wsdl:input message="mh:GetUserInfoRequest" />
+			<wsdl:output message="mh:GetUserInfoResponse" />
+			<wsdl:fault name="GetUserInfoFault" message="mh:UserFault" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="UserBinding" type="mh:User">
+		<soap:binding style="rpc"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="addUser">
+			<soap:operation soapAction="http://www.example.org/User/AddUser" />
+			<wsdl:input>
+				<soap:body namespace="http://www.example.org/User/" use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body namespace="http://www.example.org/User/" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="AddUserFault">
+				<soap:fault use="literal" name="AddUserFault" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getUserInfo">
+			<soap:operation soapAction="http://www.example.org/User/GetUserInfo" />
+			<wsdl:input>
+				<soap:body namespace="http://www.example.org/User/" use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" namespace="http://www.example.com/User/GetUserInfo"/>
+			</wsdl:output>
+			<wsdl:fault name="GetUserInfoFault">
+				<soap:fault use="literal" name="GetUserInfoFault" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="UserService">
+		<wsdl:port binding="mh:UserBinding" name="UserPort">
+			<soap:address
+				location="http://localhost:8080/UserService/services/UserService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

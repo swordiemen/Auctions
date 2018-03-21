@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- This file was auto-generated from WSDL --><!-- by the Apache Axis2 version: 1.6.4  Built on : Dec 28, 2015 (10:03:39 GMT) --><serviceGroup>
+    <service name="UserService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="org.example.www.user.UserServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">org.example.www.user.UserServiceSkeleton</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="getUserInfo" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/User/">
+            <actionMapping>http://www.example.org/User/GetUserInfo</actionMapping>
+            <outputActionMapping>http://www.example.org/User/User/getUserInfoResponse</outputActionMapping>
+            <faultActionMapping faultName="GetUserInfoFault">http://www.example.org/User/User/getUserInfo/Fault/GetUserInfoFault</faultActionMapping>
+            <faultActionMapping faultName="UserFault">http://www.example.org/User/User/getUserInfo/Fault/GetUserInfoFault</faultActionMapping>
+            <faultActionMapping faultName="UserFault_Exception">http://www.example.org/User/User/getUserInfo/Fault/GetUserInfoFault</faultActionMapping>
+        </operation>
+        <operation name="addUser" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/User/">
+            <actionMapping>http://www.example.org/User/AddUser</actionMapping>
+            <outputActionMapping>http://www.example.org/User/User/addUserResponse</outputActionMapping>
+            <faultActionMapping faultName="AddUserFault">http://www.example.org/User/User/addUser/Fault/AddUserFault</faultActionMapping>
+            <faultActionMapping faultName="UserFault">http://www.example.org/User/User/addUser/Fault/AddUserFault</faultActionMapping>
+            <faultActionMapping faultName="UserFault_Exception">http://www.example.org/User/User/addUser/Fault/AddUserFault</faultActionMapping>
+        </operation>
+    </service>
+</serviceGroup>

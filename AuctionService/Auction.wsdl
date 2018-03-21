@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:mh="http://www.example.org/Auction/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Auction"
+	targetNamespace="http://www.example.org/Auction/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.example.org/Auction/">
+			<xsd:element name="Username">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="username" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Bid">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="mh:AuctionItem"></xsd:element>
+						<xsd:element name="biddingUser" type="xsd:string"></xsd:element>
+						<xsd:element name="bidAmount" type="xsd:int"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AuctionItem">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="itemOwnerName" type="xsd:string"></xsd:element>
+						<xsd:element name="itemName" type="xsd:string"></xsd:element>
+						<xsd:element name="description" type="xsd:string"></xsd:element>
+						<xsd:element name="minimumBid" type="xsd:int"></xsd:element>
+						<xsd:element name="endTime" type="xsd:dateTime"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ItemList">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" ref="mh:AuctionItem"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AuctionFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="AuctionFault" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="AddAuctionRequest">
+		<wsdl:part element="mh:AuctionItem" name="item" />
+	</wsdl:message>
+	<wsdl:message name="AddAuctionResponse">
+	</wsdl:message>
+	<wsdl:message name="AddAuctionFault">
+		<wsdl:part name="errorMessage" element="mh:AuctionFault" />
+	</wsdl:message>
+	
+	<wsdl:message name="GetAllAuctionItemsRequest">
+	</wsdl:message>
+	<wsdl:message name="GetAllAuctionItemsResponse">
+		<wsdl:part element="mh:ItemList" name="items" />
+	</wsdl:message>
+	<wsdl:message name="GetAllAuctionItemsFault">
+		<wsdl:part name="errorMessage" element="mh:AuctionFault" />
+	</wsdl:message>
+	
+	<wsdl:message name="BidItemRequest">
+		<wsdl:part element="mh:Bid" name="bid" />
+	</wsdl:message>
+	<wsdl:message name="BidItemResponse">
+	</wsdl:message>
+	<wsdl:message name="BidItemFault">
+		<wsdl:part name="errorMessage" element="mh:AuctionFault" />
+	</wsdl:message>
+	
+	<wsdl:portType name="Auction">
+		<wsdl:operation name="AddAuction">
+			<wsdl:input message="mh:AddAuctionRequest" />
+			<wsdl:output message="mh:AddAuctionResponse" />
+			<wsdl:fault name="AddAuctionFault" message="mh:AddAuctionFault" />
+		</wsdl:operation>
+		<wsdl:operation name="GetAllAuctionItems">
+			<wsdl:input message="mh:GetAllAuctionItemsRequest" />
+			<wsdl:output message="mh:GetAllAuctionItemsResponse" />
+			<wsdl:fault name="GetAllAuctionItemsFault" message="mh:GetAllAuctionItemsFault" />
+		</wsdl:operation>
+		<wsdl:operation name="BidItem">
+			<wsdl:input message="mh:BidItemRequest" />
+			<wsdl:output message="mh:BidItemResponse" />
+			<wsdl:fault name="BidItemFault" message="mh:BidItemFault" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="AuctionBinding" type="mh:Auction">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="AddAuction">
+			<soap:operation soapAction="http://www.example.org/Auction/AddAuction" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="AddAuctionFault">
+				<soap:fault use="literal" name="AddAuctionFault" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetAllAuctionItems">
+			<soap:operation soapAction="http://www.example.org/Auction/GetAllAuctionItems" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GetAllAuctionItemsFault">
+				<soap:fault use="literal" name="GetAllAuctionItemsFault" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="BidItem">
+			<soap:operation soapAction="http://www.example.org/Auction/BidItem" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="BidItemFault">
+				<soap:fault use="literal" name="BidItemFault" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AuctionService">
+		<wsdl:port binding="mh:AuctionBinding" name="AuctionBinding">
+			<soap:address
+				location="http://localhost:8080/AuctionService/services/AuctionService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

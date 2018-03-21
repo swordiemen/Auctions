@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="User" targetNamespace="http://www.example.org/User/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mh="http://www.example.org/User/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:message name="AddUserResponse">
+    <wsdl:part name="success" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddUserRequest">
+    <wsdl:part name="username" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="password" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="address" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="email" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="User">
+    <wsdl:operation name="addUser">
+      <wsdl:input message="mh:AddUserRequest">
+    </wsdl:input>
+      <wsdl:output message="mh:AddUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="UserBinding" type="mh:User">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addUser">
+      <soap:operation soapAction="http://www.example.org/User/AddUser"/>
+      <wsdl:input>
+        <soap:body use="literal" namespace="http://www.example.org/User/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="http://www.example.org/User/"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="User">
+    <wsdl:port name="UserPort" binding="mh:UserBinding">
+      <soap:address location="http://localhost:8080/TestProject/services/UserService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
