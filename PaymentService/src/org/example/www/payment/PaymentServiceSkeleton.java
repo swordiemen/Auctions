@@ -45,6 +45,7 @@ public class PaymentServiceSkeleton implements PaymentServiceSkeletonInterface {
 					Thread.sleep((rand.nextInt(12) + 4) * 1000);
 
 					// Call the orchestrator callback indicating that the payment has been received
+					System.out.println("Call callback at orchestrator");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

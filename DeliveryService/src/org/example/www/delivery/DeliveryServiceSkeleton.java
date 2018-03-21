@@ -25,7 +25,9 @@ public class DeliveryServiceSkeleton implements DeliveryServiceSkeletonInterface
 	public org.example.www.delivery.CreateShipmentResponse createShipment(
 			org.example.www.delivery.CreateShipment shipment) throws DeliveryFaultException {
 		// TODO : fill this with the necessary business logic
-
+		
+		
+		
 		// Send shipment request to parcel company
 		System.out.println("Shipment request send to DHL" + "; pick up address:" + shipment.getSender().getAddress()
 				+ "; delivery address:" + shipment.getReceiver().getAddress());
