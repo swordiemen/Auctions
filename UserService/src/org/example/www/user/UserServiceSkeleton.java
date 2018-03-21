@@ -41,6 +41,8 @@ public class UserServiceSkeleton implements UserServiceSkeletonInterface {
 	public void load() {
 		try(ObjectInputStream oos = new ObjectInputStream(new FileInputStream(new File("users.obj")))) {
 			this.users = (List<AddUser>) oos.readObject();
+		} catch (FileNotFoundException e) {
+			// this is okay, just means there is no file to read
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -80,7 +82,7 @@ public class UserServiceSkeleton implements UserServiceSkeletonInterface {
 	public org.example.www.user.AddUserResponse addUser(org.example.www.user.AddUser addUser)
 			throws UserFaultException {
 		AddUser curUser = getUserByName(addUser.getUsername()); 
-		if(curUser != null) {
+		if(curUser == null) {
 			getUsers().add(addUser);
 			save();
 			return new AddUserResponse();	
@@ -95,6 +97,10 @@ public class UserServiceSkeleton implements UserServiceSkeletonInterface {
 	
 	public AddUser getUserByName(String name) {
 		return getUsers().stream().filter(u -> u.getUsername().equals(name)).findFirst().orElse(null);
+	}
+
+	public void clear() {
+		getUsers().clear();
 	}
 
 }

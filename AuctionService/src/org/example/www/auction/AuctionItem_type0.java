@@ -731,4 +731,9 @@ public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
 
 	}// end of factory class
 
+	public boolean hasExpired() {
+		Calendar now = Calendar.getInstance();
+		return now.compareTo(getEndTime()) > 0;
+	}
+
 }
