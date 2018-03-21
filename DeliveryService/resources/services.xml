@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- This file was auto-generated from WSDL --><!-- by the Apache Axis2 version: 1.6.4  Built on : Dec 28, 2015 (10:03:39 GMT) --><serviceGroup>
+    <service name="DeliveryService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="org.example.www.delivery.DeliveryServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">org.example.www.delivery.DeliveryServiceSkeleton</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="CreateShipment" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/Delivery/">
+            <actionMapping>http://www.example.org/Delivery/CreateShipment</actionMapping>
+            <outputActionMapping>http://www.example.org/Delivery/Delivery/CreateShipmentResponse</outputActionMapping>
+            <faultActionMapping faultName="DeliveryFault">http://www.example.org/Delivery/Delivery/CreateShipment/Fault/DeliveryFault</faultActionMapping>
+            <faultActionMapping faultName="DeliveryFault_Exception">http://www.example.org/Delivery/Delivery/CreateShipment/Fault/DeliveryFault</faultActionMapping>
+        </operation>
+    </service>
+</serviceGroup>

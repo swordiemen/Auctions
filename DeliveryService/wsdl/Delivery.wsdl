@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:mh="http://www.example.org/Delivery/" xmlns:nss="http://www.example.org/schema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Delivery"
+	targetNamespace="http://www.example.org/Delivery/">
+	<wsdl:types>
+	
+		<xsd:schema targetNamespace="http://www.example.org/Auction/">
+			<xsd:import schemaLocation="Auction.xsd"
+				namespace="http://www.example.org/schema"></xsd:import>
+		</xsd:schema>
+	
+	
+		<xsd:schema targetNamespace="http://www.example.org/Delivery/">
+			<xsd:element name="DeliveryFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DeliveryFault" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:complexType name="shipmentLocation">
+					<xsd:sequence>
+						<xsd:element name="personName" type="xsd:string"></xsd:element>
+						<xsd:element name="personEmail" type="xsd:string"></xsd:element>
+						<xsd:element name="Address" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+			</xsd:complexType>			
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="CreateShipmentRequest">
+		<wsdl:part name="AuctionItem" type="nss:AuctionItem" />
+		<wsdl:part name="Sender" type="mh:shipmentLocation" />		
+		<wsdl:part name="Receiver" type="mh:shipmentLocation" />
+	</wsdl:message>
+	<wsdl:message name="CreateShipmentResponse">
+	</wsdl:message>
+	<wsdl:message name="DeliveryFault">
+		<wsdl:part name="errorMessage" element="mh:DeliveryFault" />
+	</wsdl:message>
+	<wsdl:portType name="Delivery">
+		<wsdl:operation name="CreateShipment">
+			<wsdl:input message="mh:CreateShipmentRequest" />
+			<wsdl:output message="mh:CreateShipmentResponse" />
+			<wsdl:fault name="DeliveryFault" message="mh:DeliveryFault" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="DeliveryBinding" type="mh:Delivery">
+		<soap:binding style="rpc"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="CreateShipment">
+			<soap:operation soapAction="http://www.example.org/Delivery/CreateShipment" />
+			<wsdl:input>
+				<soap:body namespace="http://www.example.org/Delivery/" use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body namespace="http://www.example.org/Delivery/" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="DeliveryFault">
+				<soap:fault use="literal" name="DeliveryFault" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="DeliveryService">
+		<wsdl:port binding="mh:DeliveryBinding" name="DeliveryPort">
+			<soap:address
+				location="http://localhost:8080/BidMagic_Delivery/services/DeliveryService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

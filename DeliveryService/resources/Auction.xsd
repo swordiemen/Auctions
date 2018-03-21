@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.example.org/schema">
+    <xsd:complexType name="AuctionItem">
+        <xsd:sequence>
+            <xsd:element name="itemOwnerName" type="xsd:string"/>
+            <xsd:element name="itemName" type="xsd:string"/>
+            <xsd:element name="description" type="xsd:string"/>
+            <xsd:element name="minimumBid" type="xsd:int"/>
+            <xsd:element name="endTime" type="xsd:dateTime"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

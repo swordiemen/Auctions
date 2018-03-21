@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- This file was auto-generated from WSDL --><!-- by the Apache Axis2 version: 1.6.4  Built on : Dec 28, 2015 (10:03:39 GMT) --><serviceGroup>
+    <service name="PaymentService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="org.example.www.payment.PaymentServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">org.example.www.payment.PaymentServiceSkeleton</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="CreateDebtorPayment" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/Payment/">
+            <actionMapping>http://www.example.org/Payment/CreateDebtorPayment</actionMapping>
+            <outputActionMapping>http://www.example.org/Payment/Payment/CreateDebtorPaymentResponse</outputActionMapping>
+            <faultActionMapping faultName="PaymentFault">http://www.example.org/Payment/Payment/CreateDebtorPayment/Fault/PaymentFault</faultActionMapping>
+            <faultActionMapping faultName="PaymentFault_Exception">http://www.example.org/Payment/Payment/CreateDebtorPayment/Fault/PaymentFault</faultActionMapping>
+        </operation>
+    </service>
+</serviceGroup>
