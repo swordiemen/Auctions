@@ -40,6 +40,10 @@ public class AuctionServiceSkeleton implements AuctionServiceSkeletonInterface {
 	
 	public AuctionServiceSkeleton() {
 		load();
+		checkAuctionDates();
+	}
+
+	private void checkAuctionDates() {
 		Calendar twoMonthCheck = Calendar.getInstance();
 		Calendar currentDate = Calendar.getInstance();
 		int curMonth = twoMonthCheck.get(Calendar.MONTH);
@@ -92,10 +96,13 @@ public class AuctionServiceSkeleton implements AuctionServiceSkeletonInterface {
 	}
 
 	public void bidItem(org.example.www.auction.Bid bid3) throws BidItemFault {
+		checkAuctionDates();
 		AuctionItem_type0 ai = bid3.getAuctionItem();
 		Bid currentBid = getBids().get(ai);
 		if(currentBid == null && !getItems().contains(bid3.getAuctionItem())) {
 			throw new BidItemFault("The bid's AuctionItem does not exist.");
+		} else if(currentBid != null && ai.hasExpired()) {
+			throw new BidItemFault("The auction has expired.");
 		} else if(bid3.getBidAmount() < ai.getMinimumBid()) {
 			throw new BidItemFault("The bid amount is not higher than the minimum bid.");
 		} else if(currentBid != null && bid3.getBidAmount() <= currentBid.getBidAmount()) {
@@ -123,6 +130,7 @@ public class AuctionServiceSkeleton implements AuctionServiceSkeletonInterface {
 	 */
 
 	public void addAuction(org.example.www.auction.AuctionItem auctionItem) throws AddAuctionFault {
+		checkAuctionDates();
 		if (items.stream()
 				.anyMatch(au -> au.getItemName().equals(auctionItem.getAuctionItem().getItemName())
 						&& au.getItemOwnerName().equals(auctionItem.getAuctionItem().getItemOwnerName()))) {
@@ -144,6 +152,7 @@ public class AuctionServiceSkeleton implements AuctionServiceSkeletonInterface {
 	public org.example.www.auction.ItemList getAllAuctionItems(
 
 	) throws GetAllAuctionItemsFault {
+		checkAuctionDates();
 		ItemList il = new ItemList();
 		items.stream().forEach(au -> {
 			il.addAuctionItem(au);
