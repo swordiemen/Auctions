@@ -14,8 +14,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,13 +40,40 @@ public class AuctionServiceSkeleton implements AuctionServiceSkeletonInterface {
 	
 	public AuctionServiceSkeleton() {
 		load();
+		Calendar twoMonthCheck = Calendar.getInstance();
+		Calendar currentDate = Calendar.getInstance();
+		int curMonth = twoMonthCheck.get(Calendar.MONTH);
+		twoMonthCheck.add(Calendar.MONTH, 2); // Pretty sure this also takes into account overflow (and deals with it as well)
+		List<AuctionItem_type0> toRemove = new ArrayList<>();
+		List<AuctionItem_type0> overDate = new ArrayList<>();
+		for(AuctionItem_type0 au : getItems()) {
+			Calendar end = au.getEndTime();
+			if(end.compareTo(twoMonthCheck) > 0) {
+				toRemove.add(au);
+			} else if(end.compareTo(currentDate) > 0) {
+				overDate.add(au);
+			}
+		}
+		getItems().removeAll(toRemove);
+		for(AuctionItem_type0 remove : toRemove) {
+			getBids().remove(remove);
+		}
+		handleOverdateBids(overDate);
 	}
 	
 	public void save() {
 		try(ObjectOutputStream oosItems = new ObjectOutputStream(new FileOutputStream(new File("items.obj"))); 
-				ObjectOutputStream oosBids = new ObjectOutputStream(new FileOutputStream(new File("bids.obj")))) {
+				) {
 			oosItems.writeObject(getItems());
+		} catch (FileNotFoundException e) {
+			// this is okay, means that it simply hasn't been saved before
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try(ObjectOutputStream oosBids = new ObjectOutputStream(new FileOutputStream(new File("bids.obj")))) {
 			oosBids.writeObject(getBids());
+		} catch (FileNotFoundException e) {
+			// this is okay, means that it simply hasn't been saved before
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,6 +84,8 @@ public class AuctionServiceSkeleton implements AuctionServiceSkeletonInterface {
 				ObjectInputStream oosBids = new ObjectInputStream(new FileInputStream(new File("bids.obj")))) {
 			this.items = (Set<AuctionItem_type0>) oosItems.readObject();
 			this.bids = (Map<AuctionItem_type0, Bid>) oosBids.readObject();
+		} catch (FileNotFoundException e) {
+			// this is okay, means that it simply hasn't been saved before
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -63,9 +95,11 @@ public class AuctionServiceSkeleton implements AuctionServiceSkeletonInterface {
 		AuctionItem_type0 ai = bid3.getAuctionItem();
 		Bid currentBid = getBids().get(ai);
 		if(currentBid == null && !getItems().contains(bid3.getAuctionItem())) {
-			throw new BidItemFault("The bid's AuctionItem does not exist!");
-		} else if(bid3.getBidAmount() > bid3.getBidAmount()) {
-			throw new BidItemFault("Current bid is higher than the given bid!");
+			throw new BidItemFault("The bid's AuctionItem does not exist.");
+		} else if(bid3.getBidAmount() < ai.getMinimumBid()) {
+			throw new BidItemFault("The bid amount is not higher than the minimum bid.");
+		} else if(currentBid != null && bid3.getBidAmount() <= currentBid.getBidAmount()) {
+			throw new BidItemFault("New bid is not higher than the previous bid.");
 		} else {
 			getBids().put(ai, bid3);
 			save();
@@ -115,6 +149,15 @@ public class AuctionServiceSkeleton implements AuctionServiceSkeletonInterface {
 			il.addAuctionItem(au);
 		});
 		return il;
+	}
+
+	public void clear() {
+		getBids().clear();
+		getItems().clear();
+	}
+	
+	public void handleOverdateBids(List<AuctionItem_type0> overDate) {
+		// TODO send it to the orchestrator
 	}
 
 }

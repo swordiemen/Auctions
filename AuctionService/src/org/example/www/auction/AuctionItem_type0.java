@@ -8,6 +8,8 @@
 
 package org.example.www.auction;
 
+import java.util.Calendar;
+
 /**
  * AuctionItem_type0 bean class
  */
@@ -22,6 +24,18 @@ public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
 			return other.getItemName().equals(getItemName()) && other.getItemOwnerName().equals(getItemOwnerName());
 		}
 		return false;
+	}
+	
+	public AuctionItem_type0 deepCopy() {
+		AuctionItem_type0 auType = new AuctionItem_type0();
+		auType.setItemName(getItemName());
+		auType.setDescription(getDescription());
+		auType.setItemOwnerName(getItemOwnerName());
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		auType.setEndTime((Calendar) c.clone());
+		auType.setMinimumBid(getMinimumBid());
+		return auType;
 	}
 	
 	@Override
