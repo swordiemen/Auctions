@@ -16,16 +16,16 @@ import java.util.Calendar;
 @SuppressWarnings({ "unchecked", "unused" })
 
 public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof AuctionItem_type0) {
+		if (obj instanceof AuctionItem_type0) {
 			AuctionItem_type0 other = (AuctionItem_type0) obj;
 			return other.getItemName().equals(getItemName()) && other.getItemOwnerName().equals(getItemOwnerName());
 		}
 		return false;
 	}
-	
+
 	public AuctionItem_type0 deepCopy() {
 		AuctionItem_type0 auType = new AuctionItem_type0();
 		auType.setItemName(getItemName());
@@ -37,13 +37,18 @@ public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
 		auType.setMinimumBid(getMinimumBid());
 		return auType;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
 		return getItemName().hashCode() + getItemOwnerName().hashCode();
 	}
 	
+	public boolean hasExpired() {
+		Calendar now = Calendar.getInstance();
+		return now.compareTo(getEndTime()) > 0;
+	}
+
 	/*
 	 * This type was generated from the piece of schema that had name =
 	 * AuctionItem_type0 Namespace URI = http://www.example.org/Auction/ Namespace
@@ -186,6 +191,33 @@ public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
 	}
 
 	/**
+	 * field for Id
+	 */
+
+	protected int localId;
+
+	/**
+	 * Auto generated getter method
+	 * 
+	 * @return int
+	 */
+	public int getId() {
+		return localId;
+	}
+
+	/**
+	 * Auto generated setter method
+	 * 
+	 * @param param
+	 *            Id
+	 */
+	public void setId(int param) {
+
+		this.localId = param;
+
+	}
+
+	/**
 	 *
 	 * @param parentQName
 	 * @param factory
@@ -302,6 +334,19 @@ public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
 
 			xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localEndTime));
 
+		}
+
+		xmlWriter.writeEndElement();
+
+		namespace = "";
+		writeStartElement(null, namespace, "id", xmlWriter);
+
+		if (localId == java.lang.Integer.MIN_VALUE) {
+
+			throw new org.apache.axis2.databinding.ADBException("id cannot be null!!");
+
+		} else {
+			xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localId));
 		}
 
 		xmlWriter.writeEndElement();
@@ -527,6 +572,10 @@ public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
 			throw new org.apache.axis2.databinding.ADBException("endTime cannot be null!!");
 		}
 
+		elementList.add(new javax.xml.namespace.QName("", "id"));
+
+		elementList.add(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localId));
+
 		return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(),
 				attribList.toArray());
 
@@ -718,6 +767,31 @@ public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
 				while (!reader.isStartElement() && !reader.isEndElement())
 					reader.next();
 
+				if (reader.isStartElement() && new javax.xml.namespace.QName("", "id").equals(reader.getName())) {
+
+					nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance", "nil");
+					if ("true".equals(nillableValue) || "1".equals(nillableValue)) {
+						throw new org.apache.axis2.databinding.ADBException(
+								"The element: " + "id" + "  cannot be null");
+					}
+
+					java.lang.String content = reader.getElementText();
+
+					object.setId(org.apache.axis2.databinding.utils.ConverterUtil.convertToInt(content));
+
+					reader.next();
+
+				} // End of if for expected property start element
+
+				else {
+					// A start element we are not expecting indicates an invalid parameter was
+					// passed
+					throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getName());
+				}
+
+				while (!reader.isStartElement() && !reader.isEndElement())
+					reader.next();
+
 				if (reader.isStartElement())
 					// A start element we are not expecting indicates a trailing invalid property
 					throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getName());
@@ -730,10 +804,5 @@ public class AuctionItem_type0 implements org.apache.axis2.databinding.ADBBean {
 		}
 
 	}// end of factory class
-
-	public boolean hasExpired() {
-		Calendar now = Calendar.getInstance();
-		return now.compareTo(getEndTime()) > 0;
-	}
 
 }

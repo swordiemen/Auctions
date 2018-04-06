@@ -1,6 +1,6 @@
 
 /**
- * AuctionItem.java
+ * AuctionID.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis2 version: 1.6.4  Built on : Dec 28, 2015 (10:04:10 GMT)
@@ -11,45 +11,45 @@
             
 
             /**
-            *  AuctionItem bean class
+            *  AuctionID bean class
             */
             @SuppressWarnings({"unchecked","unused"})
         
-        public  class AuctionItem
+        public  class AuctionID
         implements org.apache.axis2.databinding.ADBBean{
         
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://www.example.org/Auction/",
-                "AuctionItem",
+                "AuctionID",
                 "ns1");
 
             
 
                         /**
-                        * field for AuctionItem
+                        * field for AuctionID
                         */
 
                         
-                                    protected org.example.www.auction.AuctionItem_type0 localAuctionItem ;
+                                    protected int localAuctionID ;
                                 
 
                            /**
                            * Auto generated getter method
-                           * @return org.example.www.auction.AuctionItem_type0
+                           * @return int
                            */
-                           public  org.example.www.auction.AuctionItem_type0 getAuctionItem(){
-                               return localAuctionItem;
+                           public  int getAuctionID(){
+                               return localAuctionID;
                            }
 
                            
                         
                             /**
                                * Auto generated setter method
-                               * @param param AuctionItem
+                               * @param param AuctionID
                                */
-                               public void setAuctionItem(org.example.www.auction.AuctionItem_type0 param){
+                               public void setAuctionID(int param){
                             
-                                            this.localAuctionItem=param;
+                                            this.localAuctionID=param;
                                        
 
                                }
@@ -87,13 +87,48 @@
             throws javax.xml.stream.XMLStreamException, org.apache.axis2.databinding.ADBException{
             
                 
-                //We can safely assume an element has only one type associated with it
+
+
+                java.lang.String prefix = null;
+                java.lang.String namespace = null;
                 
-                                 if (localAuctionItem==null){
-                                   throw new org.apache.axis2.databinding.ADBException("AuctionItem cannot be null!");
-                                 }
-                                 localAuctionItem.serialize(MY_QNAME,xmlWriter);
-                            
+
+                    prefix = parentQName.getPrefix();
+                    namespace = parentQName.getNamespaceURI();
+                    writeStartElement(prefix, namespace, parentQName.getLocalPart(), xmlWriter);
+                
+                  if (serializeType){
+               
+
+                   java.lang.String namespacePrefix = registerPrefix(xmlWriter,"http://www.example.org/Auction/");
+                   if ((namespacePrefix != null) && (namespacePrefix.trim().length() > 0)){
+                       writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","type",
+                           namespacePrefix+":AuctionID",
+                           xmlWriter);
+                   } else {
+                       writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","type",
+                           "AuctionID",
+                           xmlWriter);
+                   }
+
+               
+                   }
+               
+                                    namespace = "";
+                                    writeStartElement(null, namespace, "auctionID", xmlWriter);
+                             
+                                               if (localAuctionID==java.lang.Integer.MIN_VALUE) {
+                                           
+                                                         throw new org.apache.axis2.databinding.ADBException("auctionID cannot be null!!");
+                                                      
+                                               } else {
+                                                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localAuctionID));
+                                               }
+                                    
+                                   xmlWriter.writeEndElement();
+                             
+                    xmlWriter.writeEndElement();
+               
 
         }
 
@@ -273,9 +308,20 @@
 
 
         
+                 java.util.ArrayList elementList = new java.util.ArrayList();
+                 java.util.ArrayList attribList = new java.util.ArrayList();
+
                 
-                //We can safely assume an element has only one type associated with it
-                return localAuctionItem.getPullParser(MY_QNAME);
+                                      elementList.add(new javax.xml.namespace.QName("",
+                                                                      "auctionID"));
+                                 
+                                elementList.add(
+                                   org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localAuctionID));
+                            
+
+                return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
+            
+            
 
         }
 
@@ -296,9 +342,9 @@
         * Postcondition: If this object is an element, the reader is positioned at its end element
         *                If this object is a complex type, the reader is positioned at the end element of its outer element
         */
-        public static AuctionItem parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception{
-            AuctionItem object =
-                new AuctionItem();
+        public static AuctionID parse(javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception{
+            AuctionID object =
+                new AuctionID();
 
             int event;
             java.lang.String nillableValue = null;
@@ -310,6 +356,32 @@
                     reader.next();
 
                 
+                if (reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","type")!=null){
+                  java.lang.String fullTypeName = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance",
+                        "type");
+                  if (fullTypeName!=null){
+                    java.lang.String nsPrefix = null;
+                    if (fullTypeName.indexOf(":") > -1){
+                        nsPrefix = fullTypeName.substring(0,fullTypeName.indexOf(":"));
+                    }
+                    nsPrefix = nsPrefix==null?"":nsPrefix;
+
+                    java.lang.String type = fullTypeName.substring(fullTypeName.indexOf(":")+1);
+                    
+                            if (!"AuctionID".equals(type)){
+                                //find namespace for the prefix
+                                java.lang.String nsUri = reader.getNamespaceContext().getNamespaceURI(nsPrefix);
+                                return (AuctionID)org.example.www.auction.ExtensionMapper.getTypeObject(
+                                     nsUri,type,reader);
+                              }
+                        
+
+                  }
+                
+
+                }
+
+                
 
                 
                 // Note all attributes that were handled. Used to differ normal attributes
@@ -317,26 +389,42 @@
                 java.util.Vector handledAttributes = new java.util.Vector();
                 
 
-                   
-                while(!reader.isEndElement()) {
-                    if (reader.isStartElement() ){
                 
-                                    if (reader.isStartElement() && new javax.xml.namespace.QName("http://www.example.org/Auction/","AuctionItem").equals(reader.getName())){
+                    
+                    reader.next();
+                
+                                    
+                                    while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
                                 
-                                                object.setAuctionItem(org.example.www.auction.AuctionItem_type0.Factory.parse(reader));
-                                            
+                                    if (reader.isStartElement() && new javax.xml.namespace.QName("","auctionID").equals(reader.getName())){
+                                
+                                    nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
+                                    if ("true".equals(nillableValue) || "1".equals(nillableValue)){
+                                        throw new org.apache.axis2.databinding.ADBException("The element: "+"auctionID" +"  cannot be null");
+                                    }
+                                    
+
+                                    java.lang.String content = reader.getElementText();
+                                    
+                                              object.setAuctionID(
+                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToInt(content));
+                                              
+                                        reader.next();
+                                    
                               }  // End of if for expected property start element
                                 
-                             else{
-                                        // A start element we are not expecting indicates an invalid parameter was passed
-                                        throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getName());
-                             }
-                          
-                             } else {
+                                else{
+                                    // A start element we are not expecting indicates an invalid parameter was passed
+                                    throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getName());
+                                }
+                              
+                            while (!reader.isStartElement() && !reader.isEndElement())
                                 reader.next();
-                             }  
-                           }  // end of while loop
-                        
+                            
+                                if (reader.isStartElement())
+                                // A start element we are not expecting indicates a trailing invalid property
+                                throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getName());
+                            
 
 
 

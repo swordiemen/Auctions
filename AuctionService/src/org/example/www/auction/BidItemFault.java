@@ -10,7 +10,7 @@ package org.example.www.auction;
 
 public class BidItemFault extends java.lang.Exception{
 
-    private static final long serialVersionUID = 1519649518350L;
+    private static final long serialVersionUID = 1522974921251L;
     
     private org.example.www.auction.AuctionFault faultMessage;
 

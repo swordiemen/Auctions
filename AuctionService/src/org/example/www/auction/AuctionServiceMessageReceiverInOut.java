@@ -54,28 +54,32 @@
 
             if("addAuction".equals(methodName)){
                 
-                org.example.www.auction.AuctionItem wrappedParam =
+                org.example.www.auction.AuctionID auctionID23 = null;
+	                        org.example.www.auction.AuctionItem wrappedParam =
                                                              (org.example.www.auction.AuctionItem)fromOM(
                                     msgContext.getEnvelope().getBody().getFirstElement(),
                                     org.example.www.auction.AuctionItem.class,
                                     getEnvelopeNamespaces(msgContext.getEnvelope()));
                                                 
-                                               
+                                               auctionID23 =
+                                                   
+                                                   
                                                          skel.addAuction(wrappedParam)
                                                     ;
                                             
-                                        envelope = getSOAPFactory(msgContext).getDefaultEnvelope();
+                                        envelope = toEnvelope(getSOAPFactory(msgContext), auctionID23, false, new javax.xml.namespace.QName("http://www.example.org/Auction/",
+                                                    "addAuction"));
                                     } else 
 
             if("getAllAuctionItems".equals(methodName)){
                 
-                org.example.www.auction.ItemList itemList26 = null;
-	                        itemList26 =
+                org.example.www.auction.ItemList itemList25 = null;
+	                        itemList25 =
                                                      
                                                  skel.getAllAuctionItems()
                                                 ;
                                             
-                                        envelope = toEnvelope(getSOAPFactory(msgContext), itemList26, false, new javax.xml.namespace.QName("http://www.example.org/Auction/",
+                                        envelope = toEnvelope(getSOAPFactory(msgContext), itemList25, false, new javax.xml.namespace.QName("http://www.example.org/Auction/",
                                                     "getAllAuctionItems"));
                                     
             } else {
@@ -161,6 +165,20 @@
 
             }
         
+            private  org.apache.axiom.om.OMElement  toOM(org.example.www.auction.AuctionID param, boolean optimizeContent)
+            throws org.apache.axis2.AxisFault {
+
+            
+                        try{
+                             return param.getOMElement(org.example.www.auction.AuctionID.MY_QNAME,
+                                          org.apache.axiom.om.OMAbstractFactory.getOMFactory());
+                        } catch(org.apache.axis2.databinding.ADBException e){
+                            throw org.apache.axis2.AxisFault.makeFault(e);
+                        }
+                    
+
+            }
+        
             private  org.apache.axiom.om.OMElement  toOM(org.example.www.auction.ItemList param, boolean optimizeContent)
             throws org.apache.axis2.AxisFault {
 
@@ -175,6 +193,25 @@
 
             }
         
+                    private  org.apache.axiom.soap.SOAPEnvelope toEnvelope(org.apache.axiom.soap.SOAPFactory factory, org.example.www.auction.AuctionID param, boolean optimizeContent, javax.xml.namespace.QName methodQName)
+                        throws org.apache.axis2.AxisFault{
+                      try{
+                          org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
+                           
+                                    emptyEnvelope.getBody().addChild(param.getOMElement(org.example.www.auction.AuctionID.MY_QNAME,factory));
+                                
+
+                         return emptyEnvelope;
+                    } catch(org.apache.axis2.databinding.ADBException e){
+                        throw org.apache.axis2.AxisFault.makeFault(e);
+                    }
+                    }
+                    
+                         private org.example.www.auction.AuctionID wrapAddAuction(){
+                                org.example.www.auction.AuctionID wrappedElement = new org.example.www.auction.AuctionID();
+                                return wrappedElement;
+                         }
+                    
                     private  org.apache.axiom.soap.SOAPEnvelope toEnvelope(org.apache.axiom.soap.SOAPFactory factory, org.example.www.auction.ItemList param, boolean optimizeContent, javax.xml.namespace.QName methodQName)
                         throws org.apache.axis2.AxisFault{
                       try{
@@ -214,6 +251,13 @@
                 if (org.example.www.auction.AuctionFault.class.equals(type)){
                 
                         return org.example.www.auction.AuctionFault.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+            
+                if (org.example.www.auction.AuctionID.class.equals(type)){
+                
+                        return org.example.www.auction.AuctionID.Factory.parse(param.getXMLStreamReaderWithoutCaching());
                     
 
                 }

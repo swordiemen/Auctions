@@ -35,7 +35,7 @@
          */
 
         
-                public void addAuction
+                public org.example.www.auction.AuctionID addAuction
                 (
                   org.example.www.auction.AuctionItem auctionItem
                  )
