@@ -15,20 +15,43 @@
 			<xsd:element name="Bid">
 				<xsd:complexType>
 					<xsd:sequence>
-						<xsd:element ref="mh:AuctionItem"></xsd:element>
-						<xsd:element name="biddingUser" type="xsd:string"></xsd:element>
+
+						<xsd:element name="biddingUser"
+							type="xsd:string">
+						</xsd:element>
 						<xsd:element name="bidAmount" type="xsd:int"></xsd:element>
+						<xsd:element name="auctionID"
+							type="xsd:int">
+						</xsd:element>
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element name="AuctionItem">
 				<xsd:complexType>
 					<xsd:sequence>
-						<xsd:element name="itemOwnerName" type="xsd:string"></xsd:element>
-						<xsd:element name="itemName" type="xsd:string"></xsd:element>
-						<xsd:element name="description" type="xsd:string"></xsd:element>
+						<xsd:element name="itemOwnerName"
+							type="xsd:string">
+						</xsd:element>
+						<xsd:element name="itemName"
+							type="xsd:string">
+						</xsd:element>
+						<xsd:element name="description"
+							type="xsd:string">
+						</xsd:element>
 						<xsd:element name="minimumBid" type="xsd:int"></xsd:element>
-						<xsd:element name="endTime" type="xsd:dateTime"></xsd:element>
+						<xsd:element name="endTime"
+							type="xsd:dateTime">
+						</xsd:element>
+						<xsd:element name="id"
+							type="xsd:int">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AuctionID">
+			<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="auctionID" type="xsd:int"></xsd:element>
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
@@ -52,6 +75,7 @@
 		<wsdl:part element="mh:AuctionItem" name="item" />
 	</wsdl:message>
 	<wsdl:message name="AddAuctionResponse">
+        <wsdl:part name="auctionID" element="mh:AuctionID"></wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="AddAuctionFault">
 		<wsdl:part name="errorMessage" element="mh:AuctionFault" />
