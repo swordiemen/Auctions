@@ -84,11 +84,11 @@ public class AuctionServerTester {
 			e.printStackTrace();
 		}
 		assertTrue(items.contains(auType));
-		assertEquals(0, auType.getId());
+		assertEquals(1, auType.getId());
 		assertTrue(items.contains(auType2));
-		assertEquals(1, auType2.getId());
+		assertEquals(2, auType2.getId());
 		assertTrue(items.contains(auType3));
-		assertEquals(2, auType3.getId());
+		assertEquals(3, auType3.getId());
 	}
 	
 	@Test(expected = AddAuctionFault.class)
@@ -100,7 +100,7 @@ public class AuctionServerTester {
 	}
 	
 	@Test
-	public void testBid() {
+	public void testBid() throws BidItemFault {
 		AuctionItem input = new AuctionItem();
 		input.setAuctionItem(auType);
 		try {
@@ -111,12 +111,7 @@ public class AuctionServerTester {
 		Bid bid = new Bid();
 		bid.setAuctionID(auType.getId());
 		bid.setBidAmount(15);
-		try {
-			service.bidItem(bid);
-		} catch (BidItemFault e) {
-			e.printStackTrace();
-		}
-		
+		service.bidItem(bid);	
 	}
 	
 	@Test(expected = BidItemFault.class)
